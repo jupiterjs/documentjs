@@ -232,10 +232,12 @@ steal(	'//steal/generate/ejs',
 	 * 
 	 *   . name - the name of the application
 	 *   . out - where to generate the documentation files
+	 *   . ignore - a regular expression to match the paths or files that should not be processed
 	 */
 	DocumentJS = function(scripts, options) {
 		// an html file, a js file or a directory
 		options = options || {};
+		var folder;
 		if(typeof scripts == 'string'){
 			if(!options.out){
 				if(/\.html?$|\.js$/.test(scripts)){
@@ -245,16 +247,22 @@ steal(	'//steal/generate/ejs',
 				}
 			}
 
-			scripts = DocumentJS.getScripts(scripts)
+			folder  = steal.File(scripts).dir();
+			scripts = DocumentJS.getScripts(scripts);
 		}
-		
+		else
+			folder = null;
+
+		if(!options.ignore)
+			options.ignore = null;
+
  		//all the objects live here, have a unique name
 		DocumentJS.objects = {};
 		
 		//create each Script, which will create each class/constructor, etc
 		print("PROCESSING SCRIPTS\n")
 		for ( var s = 0; s < scripts.length; s++ ) {
-			DocumentJS.Script.process(scripts[s])
+			DocumentJS.Script.process(scripts[s], {ignore: options.ignore, folder: folder})
 		}
 		print('\nGENERATING DOCS -> '+options.out+'\n')
 		

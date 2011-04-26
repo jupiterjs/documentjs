@@ -14,11 +14,25 @@ steal.then(function() {
 		 * Generates docs for a file.
 		 * @param {Object} docScript an object that has src and text attributes.  It can also just be 
 		 * the path of a file.
-		 */
-		process: function( docScript ) {
+	     * @param {Object} options an options hash including
+         * 
+         *   . ignore - a regular expression to match the paths or files that should not be processed.
+         *   This is an alternative to embedding the @documentjs-ignore directive directly in a file.
+         *   . folder - location of the application file
+         */
+		process: function( docScript, options ) {
 			if(typeof docScript == 'string'){
 				docScript = {src: docScript}
 			}
+
+            //calculate file path so we can ignore it if nessesary
+            var folder = options.folder ? options.folder : steal.File(docScript.src).dir(),
+                path = steal.File(docScript.src).joinFrom(folder).replace(/\?.*/,"");
+
+            //check if the path is matched by the ignore option
+            if (options.ignore && options.ignore.test(path) ){
+                return;
+            }
 
 			var source = docScript.text || readFile(docScript.src);
 			
