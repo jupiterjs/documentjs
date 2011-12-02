@@ -1,9 +1,9 @@
 steal.then(function() {
 	/**
-	 * @class DocumentJS.types.function
+	 * @class DocumentJS.types.method
 	 * @tag documentation
 	 * @parent DocumentJS.types
-	 * Documents a function. Doc can guess at a functions name and params if the source following a comment matches something like:
+	 * Documents a method. Doc can guess at a methods name and params if the source following a comment matches something like:
 	 *
 	 * @codestart
 	 * myFuncOne : function(param1, param2){}  //or
@@ -12,10 +12,10 @@ steal.then(function() {
 	 *
 	 * ###Directives
 	 *
-	 * Use the following directives to document a function.
+	 * Use the following directives to document a method.
 	 *
 	 * @codestart
-	 * [ DocumentJS.types.function | @function ] functionName					   -&gt; Forces a function
+	 * [ DocumentJS.types.method | @method ] methodName					   -&gt; Forces a method
 	 * [ DocumentJS.tags.param | @param ] {optional:type} paramName Description -&gt; Describes a parameter
 	 * [ DocumentJS.tags.return | @return ] {type} Description					-&gt; Describes the return value
 	 * @codeend
@@ -31,17 +31,17 @@ steal.then(function() {
 	 * honorific = function(name, gender){
 	 * @codeend
 	 */
-	DocumentJS.Type("function",
+	DocumentJS.Type("method",
 			/**
 			 * @Static
 			 */
 			{
 				codeMatch: /(?:([\w\.\$]+)|(["'][^"']+["']))\s*[:=]\s*function\s?\(([^\)]*)/,
 				/*
-				 * Parses the code to get the function data.
+				 * Parses the code to get the method data.
 				 * Must return the name if from the code.
 				 * @param {String} code
-				 * @return {Object} function data
+				 * @return {Object} method data
 				 */
 				code: function(code) {
 					var parts = this.codeMatch(code);
@@ -64,7 +64,7 @@ steal.then(function() {
 					data.ret = {
 						type: 'undefined',
 						description: ""
-					}
+					};
 					var params = parts[3].match(/\w+/g);
 
 					if (!params) return data;
@@ -72,7 +72,7 @@ steal.then(function() {
 					for (var i = 0; i < params.length; i++) {
 						data.params[params[i]] = {
 							description: "",
-							type: "",
+							type: "method",
 							optional: false,
 							order: i,
 							name: params[i]
@@ -82,7 +82,7 @@ steal.then(function() {
 					return data;
 				},
 				/*
-				 * Possible scopes for @function.
+				 * Possible scopes for @method.
 				 */
 		parent: /static|proto|class|page/,
 				useName: false
