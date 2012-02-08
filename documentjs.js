@@ -254,6 +254,13 @@ steal(	'steal/generate/ejs.js',
 			}
 			steal.File(options.out).mkdir();
 			scripts = DocumentJS.getScripts(scripts)
+    } else if(scripts instanceof Array){
+			trueScriptsArr = [];
+			for(idx in scripts) {
+				files = DocumentJS.getScripts(scripts[idx]);
+				trueScriptsArr = trueScriptsArr.concat(files);
+			}
+			scripts = trueScriptsArr;
 		}
 		// an array of folders
 		if(options.markdown){
