@@ -254,7 +254,8 @@ steal(	'steal/generate/ejs.js',
 			}
 			steal.File(options.out).mkdir();
 			scripts = DocumentJS.getScripts(scripts)
-    } else if(scripts instanceof Array){
+		} else if(scripts instanceof Array){
+			steal.File(options.out).mkdir();
 			trueScriptsArr = [];
 			for(idx in scripts) {
 				files = DocumentJS.getScripts(scripts[idx]);
