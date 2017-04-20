@@ -70,6 +70,16 @@
         "devDependencies": {
           "zombie": "^4.2.1"
         }
+      },
+      "^6.0.0": {
+        "devDependencies": {
+          "zombie": "^5.0.0"
+        }
+      },
+      "^7.0.0": {
+        "devDependencies": {
+          "zombie": "^5.0.0"
+        }
       }
     },
     "iojs": {
