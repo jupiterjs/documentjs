@@ -30,7 +30,6 @@
   },
   "dependencies": {
     "async": "~0.2.7",
-    "can-component": "^3.0.7",
     "can-control": "^3.0.7",
     "can-map": "^3.0.6",
     "can-stache": "^3.0.24",
