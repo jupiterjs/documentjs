@@ -24,63 +24,67 @@ module.exports = function(options, folders){
 		// copy everything and steal.js
 		return promise;
 	} else {
+		// manually configure Can/Steal packages for Steal build
+		// if can-* or steal-* packages are updated, this list will also likely need to be updated
+		// TODO this should be automated first
 
-		// TODO good luck kyle <--------------
-
+		// root packages
 		var npmPackages = [
-			'can-control',
-			'can-map',
-			'can-construct',
-			'can-namespace',
-			'can-types',
-			'can-event',
-			'can-compute',
-			'can-observation',
 			'can-cid',
-			'can-stache',
-			'steal-stache',
-			'can-view-parser',
-			'can-view-live',
-			'can-view-nodelist',
-			'can-view-scope',
-			'can-view-callbacks',
+			'can-compute',
+			'can-construct',
+			'can-control',
+			'can-event',
+			'can-map',
+			'can-namespace',
+			'can-observation',
 			'can-simple-map',
-			'can-view-import',
+			'can-stache',
 			'can-stache-bindings',
-			'can-view-target',
+			'can-types',
+			'can-view-callbacks',
+			'can-view-import',
+			'can-view-live',
 			'can-view-model',
+			'can-view-nodelist',
+			'can-view-parser',
+			'can-view-scope',
+			'can-view-target',
+			'steal-stache',
 		];
+
+		// conditional map
 		var map = {
+			'can-compute': {
+				'proto-compute': 'can-compute/proto-compute',
+			},
 			'can-map': {
 				'bubble': 'can-map/bubble',
-				'map-helpers': 'can-map/map-helpers'
-			},
-			'can-compute': {
-				'proto-compute': 'can-compute/proto-compute'
-			},
-			'steal-stache': {
-				'add-bundles': 'steal-stache/add-bundles'
-			},
-			'can-view-live': {
-				'lib/core': 'can-view-live/lib/core',
-				'lib/attr': 'can-view-live/lib/attr',
-				'lib/html': 'can-view-live/lib/html',
-				'lib/attrs': 'can-view-live/lib/attrs',
-				'lib/list': 'can-view-live/lib/list',
-				'lib/text': 'can-view-live/lib/text'
-			},
-			'can-view-scope': {
-				'reference-map': 'can-view-scope/reference-map',
-				'compute_data': 'can-view-scope/compute_data'
+				'map-helpers': 'can-map/map-helpers',
 			},
 			'can-stache': {
-				'src/html_section': 'can-stache/src/html_section',
-				'src/text_section': 'can-stache/src/text_section',
-				'src/mustache_core': 'can-stache/src/mustache_core',
 				'helpers/core': 'can-stache/helpers/core',
 				'helpers/converter': 'can-stache/helpers/converter',
-				'src/intermediate_and_imports': 'can-stache/src/intermediate_and_imports'
-			}
+				'src/html_section': 'can-stache/src/html_section',
+				'src/intermediate_and_imports': 'can-stache/src/intermediate_and_imports',
+				'src/mustache_core': 'can-stache/src/mustache_core',
+				'src/text_section': 'can-stache/src/text_section',
+			},
+			'can-view-live': {
+				'lib/attr': 'can-view-live/lib/attr',
+				'lib/attrs': 'can-view-live/lib/attrs',
+				'lib/core': 'can-view-live/lib/core',
+				'lib/html': 'can-view-live/lib/html',
+				'lib/list': 'can-view-live/lib/list',
+				'lib/text': 'can-view-live/lib/text',
+			},
+			'can-view-scope': {
+				'compute_data': 'can-view-scope/compute_data',
+				'reference-map': 'can-view-scope/reference-map',
+			},
+			'steal-stache': {
+				'add-bundles': 'steal-stache/add-bundles',
+			},
 		};
 		var paths = {
 			'jquery': path.relative(__dirname, require.resolve('jquery')),
@@ -88,13 +92,11 @@ module.exports = function(options, folders){
 			'steal-stache': path.relative(__dirname, require.resolve('steal-stache'))
 		};
 
+		// generate the remaining paths
 		npmPackages.forEach(function(pkg) {
 			paths[pkg + '/*'] = path.dirname(path.relative(__dirname, require.resolve(pkg))) + '/*.js';
 			paths[pkg] = path.relative(__dirname, require.resolve(pkg));
 		});
-
-		// console.log(paths);
-		// console.log(map);
 
 		// makes sure can is not added to the global so we can build nicely.
 		global.GLOBALCAN = false;
