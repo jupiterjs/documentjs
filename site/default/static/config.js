@@ -4,9 +4,7 @@
 	var configData = {
 		map: {
 			"jquery/jquery": "jquery",
-			"can/util/util": "can/util/jquery/jquery",
 			"benchmark/benchmark": "benchmark",
-			"mustache": "can/view/mustache/system"
 		},
 		meta: {
 			jquery: {
