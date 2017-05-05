@@ -48,7 +48,7 @@
     "minimatch": "~1.0.0",
     "q": "~1.0.1",
     "steal": "0.16.X",
-    "steal-stache": "^3.0.5",
+    "steal-stache": "^3.0.7",
     "steal-tools": "0.16.X",
     "yargs": "^1.3.1"
   },
