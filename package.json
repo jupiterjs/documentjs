@@ -30,7 +30,7 @@
   },
   "dependencies": {
     "async": "~2.1.2",
-    "can": "3.0.0-pre.22",
+    "can": "3.1.0",
     "chokidar": "^1.0.0-rc5",
     "cross-spawn-async": "^2.1.9",
     "documentjs-github-download": "^0.3.0",
